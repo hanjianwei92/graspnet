@@ -7,8 +7,8 @@ import sys
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import pointnet2.pytorch_utils as pt_utils
-from pointnet2.pointnet2_utils import CylinderQueryAndGroup
+from ..pointnet2 import pytorch_utils as pt_utils
+from ..pointnet2.pointnet2_utils import CylinderQueryAndGroup
 from ..utils.loss_utils import generate_grasp_views, batch_viewpoint_params_to_matrix
 
 

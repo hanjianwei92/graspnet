@@ -5,7 +5,7 @@ import os
 import sys
 import torch
 import torch.nn as nn
-from pointnet2.pointnet2_modules import PointnetSAModuleVotes, PointnetFPModule
+from ..pointnet2.pointnet2_modules import PointnetSAModuleVotes, PointnetFPModule
 
 
 class Pointnet2Backbone(nn.Module):
