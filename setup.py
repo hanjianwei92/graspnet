@@ -38,5 +38,6 @@ setup(
         'sklearn',
         'grasp_nms',
         'tensorboard'
-    ]
+    ],
+    zip_safe=False
 )
