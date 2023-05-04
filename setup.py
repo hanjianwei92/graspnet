@@ -6,8 +6,8 @@ if platform.system() == "Windows":
     from distutils import _msvccompiler
     _msvccompiler.PLAT_TO_VCVARS['win-amd64'] = 'amd64'
 
-# subprocess.call(args='cd pointnet2 && python setup.py install && cd ../knn && python setup.py install',
-#                 shell=True)
+subprocess.call(args='cd pointnet2 && python setup.py install && cd ../knn && python setup.py install',
+                shell=True)
 
 setup(
     name='graspnet',
