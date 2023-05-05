@@ -17,6 +17,7 @@ setup(
     author_email='hanjianwei92@163.com',
     packages=find_packages(),
     install_requires=[
+        'ruamel.yaml==0.17.21',
         'numpy',
         'scipy',
         'transforms3d==0.3.1',

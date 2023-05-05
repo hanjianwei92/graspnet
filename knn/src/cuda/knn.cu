@@ -21,6 +21,13 @@
 #define BLOCK_DIM                      16
 #define DEBUG                          0
 
+#if defined(__WINDOWS__) || defined(_WIN32) || defined(WIN32) || defined(_WIN64) || \
+    defined(WIN64) || defined(__WIN32__) || defined(__TOS_WIN__)
+#define int64 long long
+#else
+#define int64 long
+#endif
+
 
 /**
   * Computes the distance between two matrix A (reference points) and
@@ -110,14 +117,14 @@ __shared__ float shared_B[BLOCK_DIM][BLOCK_DIM];
   * @param height      height of the distance matrix and of the index matrix
   * @param k           number of neighbors to consider
   */
-__global__ void cuInsertionSort(float *dist, long long *ind, int width, int height, int k){
+__global__ void cuInsertionSort(float *dist, int64 *ind, int width, int height, int k){
 
   // Variables
   int l, i, j;
   float *p_dist;
-  long long  *p_ind;
+  int64  *p_ind;
   float curr_dist, max_dist;
-  long long  curr_row,  max_row;
+  int64  curr_row,  max_row;
   unsigned int xIndex = blockIdx.x * blockDim.x + threadIdx.x;
 
   if (xIndex<width){
@@ -215,7 +222,7 @@ __global__ void cuParallelSqrt(float *dist, int width, int k){
   *
   */
 void knn_device(float* ref_dev, int ref_nb, float* query_dev, int query_nb,
-    int dim, int k, float* dist_dev, long long* ind_dev, cudaStream_t stream){
+    int dim, int k, float* dist_dev, int64* ind_dev, cudaStream_t stream){
 
   // Grids and threads
   dim3 g_16x16(query_nb/16, ref_nb/16, 1);
@@ -243,10 +250,10 @@ void knn_device(float* ref_dev, int ref_nb, float* query_dev, int query_nb,
 
 #if DEBUG
   unsigned int  size_of_float = sizeof(float);
-  unsigned long long size_of_long  = sizeof(long long);
+  unsigned int64 size_of_long  = sizeof(int64);
 
   float* dist_host = new float[query_nb * k];
-  long long*  idx_host  = new long long[query_nb * k];
+  int64*  idx_host  = new int64[query_nb * k];
 
   // Memory copy of output from device to host
   cudaMemcpy(&dist_host[0], dist_dev,
